@@ -14,6 +14,7 @@ import { ExportModal } from '@/components/ExportModal';
 import { Article, Category, DateFilterPreset, Region, DailySummary } from '@/lib/types';
 import { getTodayDateStr } from '@/lib/dateUtils';
 import { INITIAL_ARTICLES } from '@/data/initialNews';
+import { WifiOff } from 'lucide-react';
 
 export default function HomePage() {
   const [selectedRegion, setSelectedRegion] = useState<Region>('india');
@@ -27,6 +28,7 @@ export default function HomePage() {
   const [summary, setSummary] = useState<DailySummary | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
+  const [isOffline, setIsOffline] = useState<boolean>(false);
 
   // Bookmarks
   const [bookmarkedArticles, setBookmarkedArticles] = useState<Article[]>([]);
@@ -36,6 +38,19 @@ export default function HomePage() {
   const [activeArticle, setActiveArticle] = useState<Article | null>(null);
   const [isBookmarksOpen, setIsBookmarksOpen] = useState<boolean>(false);
   const [isExportOpen, setIsExportOpen] = useState<boolean>(false);
+
+  // Network offline listener
+  useEffect(() => {
+    const handleOnline = () => setIsOffline(false);
+    const handleOffline = () => setIsOffline(true);
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    if (!navigator.onLine) setIsOffline(true);
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   // Load saved bookmarks from localStorage
   useEffect(() => {
@@ -70,7 +85,8 @@ export default function HomePage() {
       }
 
       if (searchQuery.trim() !== '') {
-        params.set('search', searchQuery.trim());
+        const sanitizedSearch = searchQuery.replace(/[^\w\s-]/gi, '').trim();
+        params.set('search', sanitizedSearch);
       }
 
       if (forceRefresh) {
@@ -163,12 +179,21 @@ export default function HomePage() {
     setSelectedDate(getTodayDateStr());
     setSelectedCategory('all');
     setSearchQuery('');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <div className="min-h-screen flex flex-col justify-between">
       
       <div>
+        {/* Offline Banner */}
+        {isOffline && (
+          <div className="bg-amber-500 text-slate-950 px-4 py-2 text-xs font-bold flex items-center justify-center gap-2 shadow-md">
+            <WifiOff className="w-4 h-4" />
+            <span>You are currently in offline mode. Viewing cached mining intelligence database.</span>
+          </div>
+        )}
+
         {/* Navigation Header */}
         <Header
           onRefresh={() => fetchNews(true)}
