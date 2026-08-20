@@ -39,7 +39,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
-  themeColor: '#090d16',
+  themeColor: '#ffffff',
 };
 
 const jsonLd = {
@@ -58,14 +58,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen bg-slate-50 dark:bg-[#090d16] text-slate-900 dark:text-slate-100 transition-colors duration-200 antialiased selection:bg-amber-500 selection:text-slate-950">
+      <body className="min-h-screen bg-slate-100/70 text-slate-900 transition-colors duration-200 antialiased selection:bg-amber-500 selection:text-slate-950">
         {children}
       </body>
     </html>

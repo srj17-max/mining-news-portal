@@ -19,10 +19,14 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenBookmarks,
   onOpenExport,
 }) => {
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(false);
   const [currentTime, setCurrentTime] = useState<string>('');
 
   useEffect(() => {
+    // Check if user previously preferred dark mode or system setting
+    const hasDark = document.documentElement.classList.contains('dark');
+    setIsDark(hasDark);
+
     const updateTime = () => {
       const now = new Date();
       setCurrentTime(

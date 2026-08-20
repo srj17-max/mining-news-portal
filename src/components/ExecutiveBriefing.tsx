@@ -24,7 +24,7 @@ export const ExecutiveBriefing: React.FC<ExecutiveBriefingProps> = ({
   const regionLabel = region === 'india' ? 'India Mining Executive Digest' : 'Global Mining Executive Digest';
 
   return (
-    <div className="w-full bg-gradient-to-br from-amber-500/10 via-slate-900/40 to-slate-900/60 dark:from-amber-950/20 dark:via-slate-900/80 dark:to-slate-950 rounded-2xl border border-amber-500/30 p-4 sm:p-5 shadow-lg relative overflow-hidden">
+    <div className="w-full bg-gradient-to-br from-amber-500/10 via-amber-50/40 to-white dark:from-amber-950/20 dark:via-slate-900/80 dark:to-slate-950 rounded-2xl border border-amber-500/30 p-4 sm:p-5 shadow-md shadow-amber-500/5 relative overflow-hidden">
       
       {/* Glow highlight */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
