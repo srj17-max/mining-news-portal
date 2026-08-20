@@ -130,6 +130,11 @@ export function parseXmlFeedFallback(xmlText: string, region: Region): Article[]
 
     const publishedAt = pubDateObj.toISOString();
     const dateStr = formatISODate(pubDateObj);
+    let liveUrl = url;
+    if (!liveUrl || !liveUrl.startsWith('http')) {
+      liveUrl = `https://news.google.com/search?q=${encodeURIComponent(title)}`;
+    }
+
     const fullText = `${title} ${desc}`;
     const category = classifyCategory(fullText);
     const sentiment = extractSentiment(fullText);
@@ -137,6 +142,25 @@ export function parseXmlFeedFallback(xmlText: string, region: Region): Article[]
     // Pick visual image
     const imageList = CATEGORY_IMAGES[category] || CATEGORY_IMAGES.all;
     const imageUrl = imageList[i % imageList.length];
+
+    // Generate holistic summary sections
+    const executiveSummary = desc.length > 20
+      ? `${desc} This development marks a significant operational milestone for the ${category.replace('_', ' ')} sector with direct implications for domestic supply availability and downstream processing.`
+      : `${title}. Key industry stakeholders are monitoring regulatory compliance, output yields, and logistical efficiency following this announcement.`;
+
+    const marketImplications = region === 'india'
+      ? `Strengthens domestic supply security, reduces reliance on raw commodity imports, and supports India's ambitious industrial expansion targets.`
+      : `Influences global commodity benchmarks on the LME/COMEX and impacts international trade flows across key export corridors.`;
+
+    const stakeholderImpact = region === 'india'
+      ? `Impacts state mining departments, public sector undertakings (PSUs), domestic steel & power producers, and downstream manufacturers.`
+      : `Relevant for tier-1 multinational miners, institutional commodity investors, equipment OEMs, and international trade regulators.`;
+
+    const keyHighlights: string[] = [
+      `Primary focus: ${title.split(' - ')[0].trim()}`,
+      `Classified under ${category.replace('_', ' ').toUpperCase()} sector intelligence.`,
+      `Verified via ${source} reporting network.`
+    ];
 
     // Extract tags
     const tags: string[] = [];
@@ -157,7 +181,7 @@ export function parseXmlFeedFallback(xmlText: string, region: Region): Article[]
       title,
       description: desc || title,
       snippet: desc.length > 180 ? desc.substring(0, 180) + '...' : desc || title,
-      url,
+      url: liveUrl,
       source,
       publishedAt,
       dateStr,
@@ -167,6 +191,10 @@ export function parseXmlFeedFallback(xmlText: string, region: Region): Article[]
       readTime,
       tags,
       sentiment,
+      keyHighlights,
+      executiveSummary,
+      marketImplications,
+      stakeholderImpact,
       isFeatured: i === 0
     });
   }

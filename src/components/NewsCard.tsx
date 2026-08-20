@@ -166,8 +166,9 @@ export const NewsCard: React.FC<NewsCardProps> = ({
           </div>
 
           {/* Read Article Action */}
-          <span className="inline-flex items-center gap-1 text-xs font-bold text-amber-600 dark:text-amber-400 group-hover:translate-x-0.5 transition-transform shrink-0">
-            Read Brief <ExternalLink className="w-3 h-3" />
+          <span className="inline-flex items-center gap-1.5 text-xs font-bold px-2.5 py-1 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 group-hover:bg-amber-500 group-hover:text-slate-950 transition-all shrink-0">
+            <Sparkles className="w-3 h-3" />
+            <span>Holistic Brief</span>
           </span>
 
         </div>

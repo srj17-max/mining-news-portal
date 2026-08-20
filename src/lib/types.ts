@@ -32,6 +32,9 @@ export interface Article {
   sentiment?: 'positive' | 'neutral' | 'negative' | 'critical';
   location?: string;
   keyHighlights?: string[];
+  executiveSummary?: string;
+  marketImplications?: string;
+  stakeholderImpact?: string;
   isFeatured?: boolean;
 }
 

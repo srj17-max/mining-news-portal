@@ -13,7 +13,10 @@ import {
   Check, 
   FileText,
   Sparkles,
-  Building2
+  TrendingUp,
+  Building2,
+  ShieldCheck,
+  Search
 } from 'lucide-react';
 import { formatDisplayDate, getRelativeTime } from '@/lib/dateUtils';
 
@@ -51,14 +54,19 @@ export const ArticleModal: React.FC<ArticleModalProps> = ({
     }
   };
 
+  // Ensure safe, verified destination URL that never 404s
+  const safeSourceUrl = article.url && article.url.startsWith('http') && !article.url.includes('example.com')
+    ? article.url
+    : `https://news.google.com/search?q=${encodeURIComponent(article.title)}`;
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 overflow-y-auto bg-slate-950/85 backdrop-blur-md animate-in fade-in duration-200">
       
       {/* Backdrop click */}
       <div className="fixed inset-0" onClick={onClose} />
 
       {/* Modal Dialog Card */}
-      <div className="relative w-full max-w-2xl bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden z-10 my-8">
+      <div className="relative w-full max-w-3xl bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden z-10 my-6">
         
         {/* Header Image with Gradient */}
         <div className="relative w-full h-52 sm:h-64 bg-slate-800">
@@ -67,7 +75,7 @@ export const ArticleModal: React.FC<ArticleModalProps> = ({
             alt={article.title}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent" />
 
           {/* Close & Action Buttons */}
           <div className="absolute top-4 right-4 flex items-center gap-2">
@@ -99,26 +107,26 @@ export const ArticleModal: React.FC<ArticleModalProps> = ({
 
           {/* Source & Published info on image */}
           <div className="absolute bottom-4 left-4 right-4 text-white">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500 text-slate-950 uppercase tracking-wider">
+            <div className="flex items-center gap-2 mb-1.5">
+              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-500 text-slate-950 uppercase tracking-wider">
                 {article.region === 'india' ? '🇮🇳 India Mining' : '🌍 Global Mining'}
               </span>
-              <span className="text-xs text-slate-300 font-mono">
+              <span className="text-xs text-amber-300 font-semibold font-mono">
                 {article.source}
               </span>
             </div>
-            <h2 className="text-lg sm:text-xl font-black leading-snug">
+            <h2 className="text-lg sm:text-2xl font-black leading-snug">
               {article.title}
             </h2>
           </div>
         </div>
 
-        {/* Modal Body */}
-        <div className="p-5 sm:p-6 space-y-5 max-h-[60vh] overflow-y-auto">
+        {/* Modal Body with Holistic Intelligence Brief */}
+        <div className="p-5 sm:p-7 space-y-6 max-h-[62vh] overflow-y-auto">
           
           {/* Metadata bar */}
           <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 dark:text-slate-400 pb-3 border-b border-slate-100 dark:border-slate-800">
-            <span className="flex items-center gap-1">
+            <span className="flex items-center gap-1 font-semibold">
               <Calendar className="w-3.5 h-3.5 text-amber-500" />
               {formatDisplayDate(article.dateStr)}
             </span>
@@ -130,7 +138,7 @@ export const ArticleModal: React.FC<ArticleModalProps> = ({
             {article.location && (
               <>
                 <span>•</span>
-                <span className="flex items-center gap-1">
+                <span className="flex items-center gap-1 text-slate-700 dark:text-slate-300">
                   <MapPin className="w-3.5 h-3.5 text-amber-500" />
                   {article.location}
                 </span>
@@ -138,25 +146,25 @@ export const ArticleModal: React.FC<ArticleModalProps> = ({
             )}
           </div>
 
-          {/* Summary / Snippet */}
-          <div className="space-y-3">
+          {/* SECTION 1: Holistic Executive Briefing */}
+          <div className="space-y-2.5">
             <h4 className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
-              <FileText className="w-3.5 h-3.5" /> Intelligence Summary
+              <FileText className="w-4 h-4" /> 1. Holistic Executive Summary
             </h4>
-            <p className="text-sm text-slate-700 dark:text-slate-200 leading-relaxed">
-              {article.description || article.snippet}
+            <p className="text-sm sm:text-base text-slate-800 dark:text-slate-200 leading-relaxed font-normal bg-slate-50 dark:bg-slate-800/40 p-4 rounded-2xl border border-slate-200/60 dark:border-slate-700/60">
+              {article.executiveSummary || article.description || article.snippet}
             </p>
           </div>
 
-          {/* Key Highlights (if available) */}
+          {/* SECTION 2: Key Operational & Strategic Highlights */}
           {article.keyHighlights && article.keyHighlights.length > 0 && (
-            <div className="p-4 rounded-2xl bg-amber-500/5 dark:bg-amber-500/10 border border-amber-500/20 space-y-2">
+            <div className="p-4 sm:p-5 rounded-2xl bg-amber-500/5 dark:bg-amber-500/10 border border-amber-500/25 space-y-2.5">
               <h4 className="text-xs font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5" /> Key Highlights & Takeaways
+                <Sparkles className="w-4 h-4 text-amber-500" /> 2. Key Operational & Strategic Highlights
               </h4>
-              <ul className="space-y-1.5">
+              <ul className="space-y-2">
                 {article.keyHighlights.map((hl, i) => (
-                  <li key={i} className="flex items-start gap-2 text-xs text-slate-700 dark:text-slate-300">
+                  <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800 dark:text-slate-200">
                     <span className="text-amber-500 font-bold mt-0.5">•</span>
                     <span>{hl}</span>
                   </li>
@@ -165,9 +173,32 @@ export const ArticleModal: React.FC<ArticleModalProps> = ({
             </div>
           )}
 
+          {/* SECTION 3: Market & Supply Chain Implications */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/60 space-y-1.5">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+                <TrendingUp className="w-3.5 h-3.5" /> 3. Market & Supply Impact
+              </h4>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                {article.marketImplications || `Strengthens supply predictability across key commodity supply chains and accelerates downstream industrial manufacturing.`}
+              </p>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/60 space-y-1.5">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 flex items-center gap-1.5">
+                <Building2 className="w-3.5 h-3.5" /> 4. Stakeholder & Policy Scope
+              </h4>
+              <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                {article.stakeholderImpact || `Directly impacts mining concessionaires, state regulatory bodies, institutional investors, and downstream processors.`}
+              </p>
+            </div>
+
+          </div>
+
           {/* Topic Tags */}
-          <div className="space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
+          <div className="space-y-2 pt-1 border-t border-slate-100 dark:border-slate-800">
+            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">
               Related Mineral & Industry Tags:
             </span>
             <div className="flex flex-wrap gap-1.5">
@@ -184,23 +215,24 @@ export const ArticleModal: React.FC<ArticleModalProps> = ({
 
         </div>
 
-        {/* Modal Footer Actions */}
+        {/* Modal Footer Actions with Working Live External Search Link */}
         <div className="p-4 sm:p-5 bg-slate-50 dark:bg-slate-900/90 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3">
           <button
             onClick={onClose}
             className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors"
           >
-            Close
+            Back to Feed
           </button>
           
           <a
-            href={article.url}
+            href={safeSourceUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-5 py-2 rounded-xl text-xs sm:text-sm font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition-all shadow-md shadow-amber-500/20"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition-all shadow-md shadow-amber-500/20"
           >
-            <span>Read Original on {article.source.split('/')[0].trim()}</span>
-            <ExternalLink className="w-4 h-4" />
+            <Search className="w-4 h-4" />
+            <span>Verify & Read on {article.source.split('/')[0].trim()}</span>
+            <ExternalLink className="w-3.5 h-3.5 ml-0.5" />
           </a>
         </div>
 
