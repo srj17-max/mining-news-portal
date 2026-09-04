@@ -1,4 +1,4 @@
-import { Article, CommodityPrice } from '@/lib/types';
+import { Article, CommodityPrice, LMEMetalPrice } from '@/lib/types';
 import { getTodayDateStr, getYesterdayDateStr, getDaysAgoDateStr } from '@/lib/dateUtils';
 
 const today = getTodayDateStr();
@@ -225,79 +225,228 @@ export const INITIAL_ARTICLES: Article[] = [
   },
   {
     id: 'gl-today-3',
-    title: 'Copper Prices Rebound to $9,800/t Amid Smelter Capacity Constraints in China and Red Dog Outage',
-    description: 'London Metal Exchange (LME) copper futures rally on tight refined supplies, surging grid modernization investments, and AI data center cabling demand.',
-    snippet: 'Treatment and refining charges (TC/RCs) remain compressed near historic lows, pushing smelters to coordinate scheduled maintenance curbs.',
-    url: 'https://news.google.com/search?q=Copper+Prices+LME+Smelter+Constraints+Global+Mining',
-    source: 'Mining Weekly / LME News',
+    title: 'LME Copper Rebounds Above $14,200/t as Concentrates Shortage and AI Grid Demand Tighten Smelters',
+    description: 'London Metal Exchange (LME) copper official cash contracts trade near $14,350/t as global mine disruptions and historical low treatment charges constrain refined output.',
+    snippet: 'Treatment and refining charges (TC/RCs) remain compressed near negative territory, forcing global smelters to curb refined cathode production amid soaring electrification demand.',
+    url: 'https://news.google.com/search?q=LME+Copper+Prices+London+Metal+Exchange+Smelter+Deficit',
+    source: 'London Metal Exchange / Mining Weekly',
     publishedAt: `${today}T07:15:00.000Z`,
     dateStr: today,
     region: 'other',
     category: 'metals',
     imageUrl: 'https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=800&q=80',
     readTime: 4,
-    tags: ['Copper', 'LME', 'China', 'Commodities', 'Metal Prices'],
+    tags: ['Copper', 'LME', 'Base Metals', 'Commodities', 'Metal Prices'],
     sentiment: 'positive',
     location: 'London / Global',
-    executiveSummary: 'Refined copper contracts on the London Metal Exchange (LME) breached the $9,800/tonne mark as international smelting bottlenecks coincided with unprecedented structural demand from grid buildouts, offshore wind transmission, and AI data center power cabling.',
+    executiveSummary: 'Official cash settlement contracts on the London Metal Exchange (LME) for Grade A Copper reached $14,352.50/tonne, with 3-month forwards trading firmly at $14,226.50/tonne. Severe mine supply headwinds across South America coupled with near-zero smelter spot treatment charges (TCs) have created acute cathode deficits amid unprecedented demand from power grids and EV infrastructure.',
     keyHighlights: [
-      'LME 3-month benchmark copper price rose 2.4% to $9,820/tonne.',
-      'Global visible warehouse inventories draw down to near multi-year lows.',
-      'Smelter spot treatment charges (TCs) remain severely depressed below $5/tonne.',
-      'Long-term structural deficit forecasted by Goldman Sachs and Wood Mackenzie.'
+      'LME Official Cash Settlement registered at $14,352.50/tonne ($14,350.00 / $14,355.00 bid/ask).',
+      'LME 3-month forward contracts firmly positioned at $14,226.50/tonne.',
+      'Smelter spot treatment charges (TCs) remain severely depressed, forcing planned maintenance curtailments.',
+      'Total visible LME registered warehouse inventories decline to multi-week lows.'
     ],
-    marketImplications: 'Improves cash flow and free cash yields for primary copper miners while exerting cost pressures on electrical equipment manufacturers.',
-    stakeholderImpact: 'Global copper producers (Freeport, Antofagasta, Southern Copper), commodity trading desks, smelter operators, and clean energy developers.'
+    marketImplications: 'Supports record operational margins for low-cost primary copper miners (BHP, Freeport, Antofagasta) while pushing industrial fabricators to hedge forward requirements.',
+    stakeholderImpact: 'Global copper producers, LME Ring ring-dealers, wire rod and busbar fabricators, and power distribution utilities.'
+  }
+];
+
+export const LME_OFFICIAL_METALS: LMEMetalPrice[] = [
+  {
+    symbol: 'LME_CU',
+    metal: 'LME Copper (Grade A)',
+    cashBid: '$14,350.00',
+    cashAsk: '$14,355.00',
+    cashSettlement: '$14,352.50',
+    threeMonthBid: '$14,226.00',
+    threeMonthAsk: '$14,227.00',
+    threeMonthSettlement: '$14,226.50',
+    change: '+1.4%',
+    isPositive: true,
+    unit: '/ MT',
+    settlementDate: 'Official 2nd Ring Settlement'
+  },
+  {
+    symbol: 'LME_AL',
+    metal: 'LME Aluminium (Primary HG)',
+    cashBid: '$3,254.50',
+    cashAsk: '$3,255.50',
+    cashSettlement: '$3,255.00',
+    threeMonthBid: '$3,253.00',
+    threeMonthAsk: '$3,253.50',
+    threeMonthSettlement: '$3,253.25',
+    change: '+0.8%',
+    isPositive: true,
+    unit: '/ MT',
+    settlementDate: 'Official 2nd Ring Settlement'
+  },
+  {
+    symbol: 'LME_NI',
+    metal: 'LME Nickel',
+    cashBid: '$16,520.00',
+    cashAsk: '$16,530.00',
+    cashSettlement: '$16,525.00',
+    threeMonthBid: '$16,650.00',
+    threeMonthAsk: '$16,675.00',
+    threeMonthSettlement: '$16,662.50',
+    change: '-0.4%',
+    isPositive: false,
+    unit: '/ MT',
+    settlementDate: 'Official 2nd Ring Settlement'
+  },
+  {
+    symbol: 'LME_ZN',
+    metal: 'LME Zinc (Special High Grade)',
+    cashBid: '$3,998.00',
+    cashAsk: '$4,000.00',
+    cashSettlement: '$3,999.00',
+    threeMonthBid: '$3,875.00',
+    threeMonthAsk: '$3,877.00',
+    threeMonthSettlement: '$3,876.00',
+    change: '+2.1%',
+    isPositive: true,
+    unit: '/ MT',
+    settlementDate: 'Official 2nd Ring Settlement'
+  },
+  {
+    symbol: 'LME_PB',
+    metal: 'LME Lead',
+    cashBid: '$1,871.00',
+    cashAsk: '$1,873.00',
+    cashSettlement: '$1,872.00',
+    threeMonthBid: '$1,904.00',
+    threeMonthAsk: '$1,906.00',
+    threeMonthSettlement: '$1,905.00',
+    change: '+0.3%',
+    isPositive: true,
+    unit: '/ MT',
+    settlementDate: 'Official 2nd Ring Settlement'
+  },
+  {
+    symbol: 'LME_SN',
+    metal: 'LME Tin',
+    cashBid: '$54,400.00',
+    cashAsk: '$54,500.00',
+    cashSettlement: '$54,450.00',
+    threeMonthBid: '$53,900.00',
+    threeMonthAsk: '$54,000.00',
+    threeMonthSettlement: '$53,950.00',
+    change: '+1.9%',
+    isPositive: true,
+    unit: '/ MT',
+    settlementDate: 'Official 2nd Ring Settlement'
   }
 ];
 
 export const COMMODITY_PRICES: CommodityPrice[] = [
+  // LME Base Metals (Official Settlement)
   {
-    symbol: 'COAL',
-    name: 'Newcastle Thermal Coal',
-    price: '$146.50',
-    change: '+1.8%',
+    symbol: 'LME_CU',
+    name: 'LME Copper',
+    price: '$14,352.50',
+    threeMonthPrice: '$14,226.50',
+    bidAsk: '$14,350 / $14,355',
+    change: '+1.4%',
     isPositive: true,
-    unit: '/ MT'
+    unit: '/ MT',
+    exchange: 'LME Official',
+    isLME: true
   },
   {
-    symbol: 'COPPER',
-    name: 'LME Grade A Copper',
-    price: '$9,820.00',
-    change: '+2.4%',
+    symbol: 'LME_AL',
+    name: 'LME Aluminium',
+    price: '$3,255.00',
+    threeMonthPrice: '$3,253.25',
+    bidAsk: '$3,254.5 / $3,255.5',
+    change: '+0.8%',
     isPositive: true,
-    unit: '/ MT'
+    unit: '/ MT',
+    exchange: 'LME Official',
+    isLME: true
+  },
+  {
+    symbol: 'LME_NI',
+    name: 'LME Nickel',
+    price: '$16,525.00',
+    threeMonthPrice: '$16,662.50',
+    bidAsk: '$16,520 / $16,530',
+    change: '-0.4%',
+    isPositive: false,
+    unit: '/ MT',
+    exchange: 'LME Official',
+    isLME: true
+  },
+  {
+    symbol: 'LME_ZN',
+    name: 'LME Zinc',
+    price: '$3,999.00',
+    threeMonthPrice: '$3,876.00',
+    bidAsk: '$3,998 / $4,000',
+    change: '+2.1%',
+    isPositive: true,
+    unit: '/ MT',
+    exchange: 'LME Official',
+    isLME: true
+  },
+  {
+    symbol: 'LME_PB',
+    name: 'LME Lead',
+    price: '$1,872.00',
+    threeMonthPrice: '$1,905.00',
+    bidAsk: '$1,871 / $1,873',
+    change: '+0.3%',
+    isPositive: true,
+    unit: '/ MT',
+    exchange: 'LME Official',
+    isLME: true
+  },
+  {
+    symbol: 'LME_SN',
+    name: 'LME Tin',
+    price: '$54,450.00',
+    threeMonthPrice: '$53,950.00',
+    bidAsk: '$54,400 / $54,500',
+    change: '+1.9%',
+    isPositive: true,
+    unit: '/ MT',
+    exchange: 'LME Official',
+    isLME: true
+  },
+  // Bulk & Energy Mining Commodities
+  {
+    symbol: 'COAL',
+    name: 'Newcastle Coal',
+    price: '$147.20',
+    change: '+0.9%',
+    isPositive: true,
+    unit: '/ MT',
+    exchange: 'Global Benchmark'
+  },
+  {
+    symbol: 'IRON_ORE',
+    name: 'Iron Ore (62% Fe)',
+    price: '$99.42',
+    change: '-0.8%',
+    isPositive: false,
+    unit: '/ dmt',
+    exchange: 'CFR China'
   },
   {
     symbol: 'LITHIUM',
     name: 'Lithium Carbonate (99.5%)',
-    price: '$13,400.00',
-    change: '+0.6%',
+    price: '$21,250.00',
+    change: '+1.2%',
     isPositive: true,
-    unit: '/ MT'
-  },
-  {
-    symbol: 'IRON_ORE',
-    name: 'Iron Ore 62% Fe CFR China',
-    price: '$112.80',
-    change: '-0.5%',
-    isPositive: false,
-    unit: '/ dmt'
+    unit: '/ MT',
+    exchange: 'Battery Grade Spot'
   },
   {
     symbol: 'GOLD',
-    name: 'COMEX Gold Futures',
-    price: '$2,510.40',
-    change: '+0.9%',
+    name: 'COMEX Gold',
+    price: '$2,514.80',
+    change: '+0.5%',
     isPositive: true,
-    unit: '/ oz'
-  },
-  {
-    symbol: 'ALUMINUM',
-    name: 'LME Primary Aluminum',
-    price: '$2,485.00',
-    change: '+1.1%',
-    isPositive: true,
-    unit: '/ MT'
+    unit: '/ oz',
+    exchange: 'COMEX'
   }
 ];

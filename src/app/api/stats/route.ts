@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { COMMODITY_PRICES } from '@/data/initialNews';
+import { COMMODITY_PRICES, LME_OFFICIAL_METALS } from '@/data/initialNews';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -9,6 +9,9 @@ export async function GET() {
     {
       success: true,
       commodities: COMMODITY_PRICES,
+      lmeMetals: LME_OFFICIAL_METALS,
+      exchange: 'London Metal Exchange (LME)',
+      pricingSession: 'Official 2nd Ring Settlement Prices (USD/tonne)',
       timestamp: new Date().toISOString()
     },
     {
@@ -20,3 +23,4 @@ export async function GET() {
     }
   );
 }
+

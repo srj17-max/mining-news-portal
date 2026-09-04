@@ -52,13 +52,32 @@ export interface DailySummary {
   };
 }
 
+export interface LMEMetalPrice {
+  symbol: string;
+  metal: string;
+  cashBid: string;
+  cashAsk: string;
+  cashSettlement: string;
+  threeMonthBid: string;
+  threeMonthAsk: string;
+  threeMonthSettlement: string;
+  change: string;
+  isPositive: boolean;
+  unit: string;
+  settlementDate: string;
+}
+
 export interface CommodityPrice {
   symbol: string;
   name: string;
   price: string;
+  threeMonthPrice?: string;
   change: string;
   isPositive: boolean;
   unit: string;
+  exchange?: string;
+  bidAsk?: string;
+  isLME?: boolean;
 }
 
 export interface NewsResponse {
